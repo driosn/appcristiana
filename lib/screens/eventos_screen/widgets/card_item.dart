@@ -58,7 +58,7 @@ class CardItem extends StatelessWidget {
               width: 150.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(_itemImage),
+                  image: NetworkImage(_itemImage),
                   fit: BoxFit.fill
                 )
               ),

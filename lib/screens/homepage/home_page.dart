@@ -2,6 +2,7 @@ import 'package:app_cristiana/screens/backstage_screen/backstage_screen.dart';
 import 'package:app_cristiana/screens/blog_screen/blog_screen.dart';
 import 'package:app_cristiana/screens/eventos_screen/eventos_screen.dart';
 import 'package:app_cristiana/screens/iglesias_screen/iglesias_screen.dart';
+import 'package:app_cristiana/screens/radio_screen/radio_screen.dart';
 import 'package:app_cristiana/screens/ubb_screen/ubb_screen.dart';
 import 'package:app_cristiana/screens/ujblp_screen/ujblp_screen.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +100,7 @@ class HomePage extends StatelessWidget {
             Row(
               children: <Widget>[
                 Expanded(child: SizedBox(width: 50.0)),
-                SelectActivity('Radio', 'assets/images/radio.jpg', 340.0, null),
+                SelectActivity('Radio', 'assets/images/radio.jpg', 340.0, RadioScreen()),
                 Expanded(child: SizedBox(width: 50.0))
               ],
             ),

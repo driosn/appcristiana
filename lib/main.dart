@@ -1,3 +1,4 @@
+import 'package:app_cristiana/models/event_model.dart';
 import 'package:app_cristiana/screens/aboutBlogs_screen/aboutBlog_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import 'package:app_cristiana/GeneralWidgets/about_screen.dart';
 import 'package:app_cristiana/screens/backstage_screen/backstage_screen.dart';
 import 'package:app_cristiana/screens/eventos_screen/eventos_screen.dart';
 import 'package:app_cristiana/screens/blog_screen/blog_screen.dart';
+
+import 'screens/addScreens/add_evento.dart';
 
 
 void main() {

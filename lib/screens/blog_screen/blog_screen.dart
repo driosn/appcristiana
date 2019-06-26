@@ -1,8 +1,9 @@
-import 'package:app_cristiana/screens/aboutBlogs_screen/aboutBlog_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_cristiana/screens/homepage/home_page.dart';
 import 'package:app_cristiana/screens/eventos_screen/widgets/card_item.dart';
+import 'package:app_cristiana/screens/aboutBlogs_screen/aboutBlog_screen.dart';
+import 'package:app_cristiana/screens/addScreens/add_blog.dart';
 
 class BlogScreen extends StatelessWidget {
   @override
@@ -28,7 +29,10 @@ Dios ha preparado una ciudad en la eternidad para esos héroes de la fe, para qu
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddBlog())
+          );
         },
         backgroundColor: Colors.grey,
         child: Icon(Icons.add),
