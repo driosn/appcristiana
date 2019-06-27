@@ -73,10 +73,14 @@ class CardItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => _navigationWidget)
-        );
+        // Navigator.push(
+          // context,
+          // MaterialPageRoute(builder: (context) => _navigationWidget)
+        // );
+        print("MUESTRA");
+        print(this._itemImage);
+        print(this._itemInfo);
+        print(this._itemTitle);
       },
         child: Row(
         children: <Widget>[

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "993514629382",
+    "firebase_url": "https://appcristiana-5dec7.firebaseio.com",
+    "project_id": "appcristiana-5dec7",
+    "storage_bucket": "appcristiana-5dec7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993514629382:android:881ad5ce7a2dc3b8",
+        "android_client_info": {
+          "package_name": "com.example.app_cristiana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993514629382-ivql80clusi3ac4i7h07g6dhs5fosavd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app_cristiana",
+            "certificate_hash": "a3210518401c282530a0702a514ace877d2a0cbd"
+          }
+        },
+        {
+          "client_id": "993514629382-m9ptigh9urd7a4895nmop5rge409oa0s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy6wISQUhf0DEgNncikgBkWx547qDtHzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993514629382-m9ptigh9urd7a4895nmop5rge409oa0s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

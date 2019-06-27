@@ -19,12 +19,13 @@ class AddEvento extends StatefulWidget {
   _AddEventoState createState() => _AddEventoState();
 }
 
-File image;
-String filename;
-
 final eventReference = FirebaseDatabase.instance.reference().child('event');
 
 class _AddEventoState extends State<AddEvento> {
+
+  File image;
+  String imageName;
+  String linkImage;
   
   List<MyEvent> eventos;
   
@@ -86,17 +87,31 @@ class _AddEventoState extends State<AddEvento> {
                     TextFieldForAdd(_dateController, Icons.date_range, 'Fecha'),
                     Padding(padding: EdgeInsets.only(top: 8.0)),
                     Divider(),
-                    FlatButton(onPressed: (){
+                    FlatButton(onPressed: () async {
+                        StorageReference ref = FirebaseStorage.instance.ref().child('myimage');
+                        StorageUploadTask uploadTask = ref.putFile(image);
+
+                        var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+
+                        linkImage = downurl.toString();  
+                        print("Download Url: $linkImage");
+                        print('''
+                        
+                  
+                        ''');
+                        //var myUrl = uploadImage();
                         eventReference.push().set({
                           'titleEvent' : _titleController.text,
-                          'urlImage' : uploadImage(),
+                          'urlImage' : linkImage,
                           'description' : _descriptionController.text,
                           'information' : _informationController.text,
-                          'date' : _dateController.text
+                          'date' : _dateController.text 
                         }).then((_){
                           Navigator.pop(context);
                         });
-                    })
+                    },
+                      child: Text('Añadir Evento')
+                    )
                   ],
                 ),
                  ]
@@ -111,7 +126,6 @@ class _AddEventoState extends State<AddEvento> {
     var selectedImage = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       image = selectedImage;
-      filename = basename(image.path);
     });
   }
 
@@ -124,13 +138,14 @@ class _AddEventoState extends State<AddEvento> {
   }
 
   Future<String> uploadImage() async {
-    StorageReference ref = FirebaseStorage.instance.ref().child(filename);
+    StorageReference ref = FirebaseStorage.instance.ref().child('myimage');
     StorageUploadTask uploadTask = ref.putFile(image);
 
-    var downUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
-    var url = downUrl.toString();
-
-    return url;
+    var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    
+    linkImage = downurl.toString();  
+    print("Download Url: $linkImage");
+  
   }
 }
 
