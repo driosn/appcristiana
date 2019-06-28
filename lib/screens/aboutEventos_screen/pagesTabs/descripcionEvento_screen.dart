@@ -12,7 +12,7 @@ class DescripcionEvento extends StatelessWidget {
   Widget build(BuildContext context) {
     
     final imageEvent = Container(
-      child: Image.asset(
+      child: Image.network(
         _imageEvent
       ),
     );

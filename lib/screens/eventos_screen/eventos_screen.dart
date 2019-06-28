@@ -62,7 +62,7 @@ class _EventosScreenState extends State<EventosScreen> {
                     itemBuilder: (context, position) {
                       return Column(
                         children: <Widget>[
-                          CardItem('${eventos[position].urlImage}', '${eventos[position].titleEvent}', '${eventos[position].date}', null),
+                          CardItem('${eventos[position].urlImage}', '${eventos[position].titleEvent}', '${eventos[position].date}', AboutEventos('${eventos[position].titleEvent}', '${eventos[position].urlImage}', '${eventos[position].description}', '${eventos[position].information}')),
                           Divider(height: 10.0)
                         ],
                       );

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_cristiana/screens/aboutBlogs_screen/aboutBlog_screen.dart';
 import 'package:app_cristiana/screens/aboutIglesias_screen/widgets/aboutIglesia_screen.dart';
 import 'package:app_cristiana/screens/addScreens/add_iglesia.dart';
@@ -5,8 +7,36 @@ import 'package:flutter/material.dart';
 
 import 'package:app_cristiana/screens/homepage/home_page.dart';
 import 'package:app_cristiana/screens/eventos_screen/widgets/card_item.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:app_cristiana/models/iglesia_model.dart';
 
-class IglesiasScreen extends StatelessWidget {
+class IglesiasScreen extends StatefulWidget {
+  @override
+  _IglesiasScreenState createState() => _IglesiasScreenState();
+}
+
+final iglesiaReference = FirebaseDatabase.instance.reference().child('iglesia');
+
+class _IglesiasScreenState extends State<IglesiasScreen> {
+  
+  List<Iglesia> iglesias;
+  StreamSubscription<Event> _onIglesiaAddedSubscription;
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    iglesias = new List();
+     _onIglesiaAddedSubscription = iglesiaReference.onChildAdded.listen(_onIglesiaAdded);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _onIglesiaAddedSubscription.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,12 +45,7 @@ class IglesiasScreen extends StatelessWidget {
         backgroundColor: Colors.grey,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddIglesia())
-          );
-        },
+        onPressed: () => _createNewIglesia(context),
         backgroundColor: Colors.grey,
         child: Icon(Icons.add),
       ),
@@ -28,17 +53,32 @@ class IglesiasScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 15.0),
-        child: ListView(
-          children: <Widget>[
-            CardItem("assets/images/iglesias/iglesia1.jpg", "Iglesia Peña de Horeb", "La Paz, BOLIVIA, Villa Pacajes", AboutIglesia()),
-            CardItem("assets/images/iglesias/iglesia2.jpg", "Iglesia Evangelica Bautista Los Andes", "La Paz, BOLIVIA, Plaza Garita de Lima", AboutBlogScreen("La excepcional promesa que Dios preparó para nosotros", "assets/images/exampleblog/blog1.jpg", '''Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. orem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.''')),
-            CardItem("assets/images/iglesias/iglesia3.jpg", "Iglesia El Prado", "La Paz, BOLIVIA, Av 16 de Julio", AboutBlogScreen("La excepcional promesa que Dios preparó para nosotros", "assets/images/exampleblog/blog1.jpg", '''Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. orem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.''')),
-            CardItem("assets/images/iglesias/iglesia1.jpg", "Iglesia Bautista Monte de Horeb", "La Paz, BOLIVIA, Av San Ignacio", AboutBlogScreen("La excepcional promesa que Dios preparó para nosotros", "assets/images/exampleblog/blog1.jpg", '''Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. orem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.''')),
-            CardItem("assets/images/iglesias/iglesia2.jpg", "Iglesia El Buen Pastor", "La Paz, BOLIVIA, Calle Emeterio Cano", AboutBlogScreen("La excepcional promesa que Dios preparó para nosotros", "assets/images/exampleblog/blog1.jpg", '''Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. orem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.''')),
-            CardItem("assets/images/iglesias/iglesia3.jpg", "Iglesia Para la Familia", "La Paz, BOLIVIA, Calle Claudio Pinilla", AboutBlogScreen("La excepcional promesa que Dios preparó para nosotros", "assets/images/exampleblog/blog1.jpg", '''Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. orem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.''')),            
-          ],
+        child: Center(
+                  child: ListView.builder(
+                    itemCount: iglesias.length,
+                    itemBuilder: (context, position) {
+                      return Column(
+                        children: <Widget>[
+                          CardItem('${iglesias[position].urlImage}', '${iglesias[position].titleIglesia}', '${iglesias[position].zona}', AboutIglesia('${iglesias[position].titleIglesia}', '${iglesias[position].urlImage}', '${iglesias[position].description}', '${iglesias[position].horarios}')),
+                          Divider(height: 10.0)
+                        ],
+                      );
+                    }
+          ),
         ),
       ),
+    );
+  }
+
+  void _onIglesiaAdded(Event event) {
+    setState(() {
+      iglesias.add(new Iglesia.fromSnapShot(event.snapshot));
+    });
+  }
+
+  void _createNewIglesia(BuildContext context) async {
+    await Navigator.push(context,
+      MaterialPageRoute(builder: (context) => AddIglesia(Iglesia(null, '', '' ,'', '', '')))
     );
   }
 

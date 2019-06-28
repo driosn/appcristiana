@@ -15,6 +15,8 @@ class TextFieldForAdd extends StatelessWidget {
       style: TextStyle(fontSize: 17, color: Colors.black),
       decoration: InputDecoration(icon: Icon(_iconData),
       labelText: _labelText),
+      keyboardType: TextInputType.multiline,
+      maxLines: null,
     );
   }
 }

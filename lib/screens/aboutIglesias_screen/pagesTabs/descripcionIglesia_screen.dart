@@ -22,7 +22,7 @@ class DescripcionIglesia extends StatelessWidget {
     );
 
     final imageIglesia = Container(
-      child: Image.asset(
+      child: Image.network(
         _imageIglesia
       )
     );
