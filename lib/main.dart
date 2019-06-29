@@ -1,5 +1,6 @@
 import 'package:app_cristiana/models/event_model.dart';
 import 'package:app_cristiana/screens/aboutBlogs_screen/aboutBlog_screen.dart';
+import 'package:app_cristiana/screens/auth/loginpage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage()
+      home: LoginPage()
     );
   }
 }

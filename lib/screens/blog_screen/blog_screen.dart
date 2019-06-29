@@ -41,7 +41,7 @@ class _BlogScreenState extends State<BlogScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Eventos'),
+        title: Text('Blogs'),
         backgroundColor: Colors.grey,
       ),
       floatingActionButton: FloatingActionButton(
@@ -59,7 +59,7 @@ class _BlogScreenState extends State<BlogScreen> {
                     itemBuilder: (context, position) {
                       return Column(
                         children: <Widget>[
-                          CardItem('${blogs[position].urlImage}', '${eventos[position].titleEvent}', '${eventos[position].date}', AboutEventos('${eventos[position].titleEvent}', '${eventos[position].urlImage}', '${eventos[position].description}', '${eventos[position].information}')),
+                          CardItem('${blogs[position].urlImage}', '${blogs[position].titleBlog}', '${blogs[position].autor}', AboutBlogScreen('${blogs[position].titleBlog}', '${blogs[position].urlImage}', '${blogs[position].contentBlog}')),
                           Divider(height: 10.0)
                         ],
                       );
@@ -78,7 +78,7 @@ class _BlogScreenState extends State<BlogScreen> {
 
   void _createNewBlog(BuildContext context) async {
     await Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AddBlog(Blog(null, '', '', '')))
+        MaterialPageRoute(builder: (context) => AddBlog(Blog(null, '', '', '', '', '')))
     );
   }
 

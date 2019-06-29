@@ -7,14 +7,16 @@ class Blog {
   String _titleBlog;
   String _urlImage;
   String _urlVideo;
+  String _autor;
   String _contentBlog;
   
-  Blog(this._id, this._titleBlog, this._urlImage, this._urlVideo, this._contentBlog);
+  Blog(this._id, this._titleBlog, this._urlImage, this._urlVideo, this._autor, this._contentBlog);
 
   Blog.map(dynamic obj) {
     this._titleBlog = obj['titleBlog'];
     this._urlImage = obj['urlImage'];
     this._urlVideo = obj['urlVideo'];
+    this._autor = obj['autor'];
     this._contentBlog = obj['content'];
   }
 
@@ -22,6 +24,7 @@ class Blog {
   String get titleBlog => _titleBlog;
   String get urlImage => _urlImage;
   String get urlVideo => _urlVideo;
+  String get autor => _autor;
   String get contentBlog => _contentBlog;
 
   Blog.fromSnapShot(DataSnapshot snapshot) {
@@ -29,6 +32,7 @@ class Blog {
     _titleBlog = snapshot.value['titleBlog'];
     _urlImage = snapshot.value['urlImage'];
     _urlVideo = snapshot.value['urlVideo'];
+    _autor = snapshot.value['autor'];
     _contentBlog = snapshot.value['content'];
   }
 

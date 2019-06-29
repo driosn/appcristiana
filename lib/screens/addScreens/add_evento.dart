@@ -127,7 +127,7 @@ class _AddEventoState extends State<AddEvento> {
                       Padding(padding: EdgeInsets.only(top: 8.0)),
                       Divider(),
                       FlatButton(onPressed: () async {
-                          StorageReference ref = FirebaseStorage.instance.ref().child('myimage');
+                          StorageReference ref = FirebaseStorage.instance.ref().child(basename(image.path));
                           StorageUploadTask uploadTask = ref.putFile(image);
 
                           var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();

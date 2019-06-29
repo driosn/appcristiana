@@ -55,7 +55,7 @@ class AboutBlogScreen extends StatelessWidget {
       height: 100.0,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(blogScreen)
+          image: NetworkImage(blogScreen)
         )
       ),
     );
