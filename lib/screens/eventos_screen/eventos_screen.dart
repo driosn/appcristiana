@@ -1,4 +1,7 @@
 //From Flutter
+import 'package:app_cristiana/screens/auth/loginpage.dart';
+import 'package:app_cristiana/screens/auth/userdetails.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async';
@@ -14,6 +17,11 @@ import 'package:app_cristiana/screens/addScreens/add_evento.dart';
 import 'package:app_cristiana/models/event_model.dart';
 
 class EventosScreen extends StatefulWidget {
+
+  UserDetails details;
+
+  EventosScreen(this.details);
+
   @override
   _EventosScreenState createState() => _EventosScreenState();
 }
@@ -52,7 +60,56 @@ class _EventosScreenState extends State<EventosScreen> {
         backgroundColor: Colors.grey,
         child: Icon(Icons.add),
       ),
-      drawer: HomePage.createDrawer(context),
+      drawer: Drawer(
+          child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(child: SizedBox()),
+                    widget.details.userName == null ? Text('${widget.details.userEmail}') : Text('${widget.details.userName}'),
+                    SizedBox(height: 10.0),
+                    CircleAvatar(
+                      backgroundImage: widget.details.photoUser == null ? AssetImage('assets/images/smile.png') : NetworkImage('${widget.details.photoUser}'),
+                      radius: 30.0,
+                    ),
+                    Expanded(child: SizedBox())
+                  ],
+                )
+              ),
+              decoration: BoxDecoration(
+                color: Colors.grey,
+              ),
+            ),
+            ListTile(
+              title: Text('Inicio'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.of(context);
+              },
+            ),
+            ListTile(
+              title: Text('Cerrar Sesion'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                _signOut();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  ModalRoute.withName('/'),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       backgroundColor: Colors.black,
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 15.0),
@@ -71,6 +128,11 @@ class _EventosScreenState extends State<EventosScreen> {
         ),
       ),
     );
+  }
+
+  void _signOut() async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    await _auth.signOut();
   }
 
   void _onEventAdded(Event event) {

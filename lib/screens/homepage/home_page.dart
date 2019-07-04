@@ -1,3 +1,5 @@
+import 'package:app_cristiana/screens/auth/loginpage.dart';
+import 'package:app_cristiana/screens/auth/userdetails.dart';
 import 'package:app_cristiana/screens/backstage_screen/backstage_screen.dart';
 import 'package:app_cristiana/screens/blog_screen/blog_screen.dart';
 import 'package:app_cristiana/screens/eventos_screen/eventos_screen.dart';
@@ -5,11 +7,17 @@ import 'package:app_cristiana/screens/iglesias_screen/iglesias_screen.dart';
 import 'package:app_cristiana/screens/radio_screen/radio_screen.dart';
 import 'package:app_cristiana/screens/ubb_screen/ubb_screen.dart';
 import 'package:app_cristiana/screens/ujblp_screen/ujblp_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_cristiana/screens/homepage/widgets/select_activity.dart';
 
 class HomePage extends StatelessWidget {
+  
+  UserDetails details;
+
+  HomePage(this.details);
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,13 +25,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.grey,
       ),
       backgroundColor: Colors.black,
-      drawer: createDrawer(context),
-      body: createItems(),
-    );
-  }
-
-  static Widget createDrawer(BuildContext context) {
-    return Drawer(
+      drawer: Drawer(
           child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
@@ -33,18 +35,16 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Expanded(child: SizedBox()),
-                    Text('Bienvenido'),
+                    this.details.userName == null ? Text('${this.details.userEmail}') : Text('${this.details.userName}'),
                     SizedBox(height: 10.0),
                     CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/smile.png'),
+                      backgroundImage: this.details.photoUser == null ? AssetImage('assets/images/smile.png') : NetworkImage('${this.details.photoUser}'),
                       radius: 30.0,
                     ),
                     Expanded(child: SizedBox())
                   ],
-
                 )
-                
-                ),
+              ),
               decoration: BoxDecoration(
                 color: Colors.grey,
               ),
@@ -55,30 +55,30 @@ class HomePage extends StatelessWidget {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
+                Navigator.of(context);
               },
             ),
             ListTile(
-              title: Text('Mi Cuenta'),
+              title: Text('Cerrar Sesion'),
               onTap: () {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Configuraciones'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
+                _signOut();
+                Navigator.of(context)
+                .pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
               },
             ),
           ],
         ),
-      );
+      ),
+      body: createItems(),
+    );
+  }
+
+  void _signOut() async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    await _auth.signOut();
   }
 
   Widget createItems() {
@@ -92,7 +92,7 @@ class HomePage extends StatelessWidget {
                 Expanded(child: SizedBox(width: 50.0)),
                 SelectActivity('', 'assets/images/backstage.jpg', 170.0, BackStageScreen()),
                 Expanded(child: SizedBox()),
-                SelectActivity('Iglesias', 'assets/images/iglesia.jpg', 170.0, IglesiasScreen()),
+                SelectActivity('Iglesias', 'assets/images/iglesia.jpg', 170.0, IglesiasScreen(this.details)),
                 Expanded(child: SizedBox(width: 50.0))
               ],
             ),
@@ -108,7 +108,7 @@ class HomePage extends StatelessWidget {
             Row(
               children: <Widget>[
                 Expanded(child: SizedBox(width: 50.0)),
-                SelectActivity('Eventos', 'assets/images/eventos.jpg', 170.0, EventosScreen()),
+                SelectActivity('Eventos', 'assets/images/eventos.jpg', 170.0, EventosScreen(this.details)),
                 Expanded(child: SizedBox()),
                 SelectActivity('', 'assets/images/bautista.jpeg', 170.0, UbbScreen()),
                 Expanded(child: SizedBox(width: 50.0))
@@ -120,7 +120,7 @@ class HomePage extends StatelessWidget {
                 Expanded(child: SizedBox(width: 50.0)),
                 SelectActivity('', 'assets/images/jovenes.jpg', 170.0, UjblpScreen()),
                 Expanded(child: SizedBox()),
-                SelectActivity('Blog', 'assets/images/blog.jpeg', 170.0, BlogScreen()),
+                SelectActivity('Blog', 'assets/images/blog.jpeg', 170.0, BlogScreen(this.details)),
                 Expanded(child: SizedBox(width: 50.0))
               ],
             ),
