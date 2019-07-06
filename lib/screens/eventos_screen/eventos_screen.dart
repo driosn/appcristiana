@@ -123,18 +123,18 @@ class _EventosScreenState extends State<EventosScreen> {
                             children: <Widget>[ 
                               CardItem('${eventos[position].urlImage}', '${eventos[position].titleEvent}', '${eventos[position].date}', AboutEventos('${eventos[position].titleEvent}', '${eventos[position].urlImage}', '${eventos[position].description}', '${eventos[position].information}')),
                               Positioned(
-                                top: 30.0,
-                                right: 30.0,
-                                child: (widget.details.userName == 'David Rios') ? 
-                                InkWell(
-                                  child: Icon(
-                                            Icons.delete,
-                                            size: 40.0,
-                                            color: Colors.black,
-                                  ),
-                                  onTap: () =>  _deleteEvent(context, eventos[position], position),
-                                 ) : SizedBox()
-                              ) ,
+                                left: 15.0,
+                                top: 10.0,                 
+                                child: widget.details.userName == 'David Rios' ?
+                                  InkWell(
+                                    child: Icon(
+                                              Icons.delete,
+                                              size: 40.0,
+                                              color: Colors.black,
+                                    ),
+                                    onTap: () =>  _deleteEvent(context, eventos[position], position),
+                                   ) : SizedBox(),
+                              )
                             ],
                           ),
                           Divider(height: 10.0)

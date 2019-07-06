@@ -1,7 +1,12 @@
+import 'dart:async';
+
+import 'package:app_cristiana/models/comment_model.dart';
+import 'package:app_cristiana/screens/auth/userdetails.dart';
+import 'package:app_cristiana/screens/commentScreen.dart/commentScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 
 class AboutBlogScreen extends StatefulWidget {
   
@@ -10,21 +15,34 @@ class AboutBlogScreen extends StatefulWidget {
   final String _blogVideo;
   final String _blogDescription;
   
+  UserDetails details;
 
-  AboutBlogScreen(this._blogTitle, this._blogImage, this._blogVideo, this._blogDescription);
+  int cantidadComentarios;
+
+  AboutBlogScreen(this._blogTitle, this._blogImage, this._blogVideo, this._blogDescription, this.details);
 
   @override
   _AboutBlogScreenState createState() => _AboutBlogScreenState();
 }
 
+final commentReference = FirebaseDatabase.instance.reference().child('comment');
+
 class _AboutBlogScreenState extends State<AboutBlogScreen> {
 
   ChewieController _chewieController;
+
+  List<Comment> comments;
+  StreamSubscription<Event> _onCommentAddedSubscription;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    
+    comments = new List();
+    _onCommentAddedSubscription = commentReference.onChildAdded.listen(_onCommentAdded);
+
+
     print(widget._blogTitle);
     if(widget._blogVideo == null) print('NULOOOOO');
     print(widget._blogVideo);
@@ -50,6 +68,25 @@ class _AboutBlogScreenState extends State<AboutBlogScreen> {
         }
       );
     }
+  
+    // Firebase Comments
+
+    FirebaseDatabase.instance
+      .reference()
+      .child('comment')
+      .orderByChild('titleBlogComment')
+      .equalTo(widget._blogTitle)
+      .once()
+      .then((onValue){
+        setState(() {
+          Map data = onValue.value;
+          widget.cantidadComentarios = data.length;
+        });
+      });
+  
+    if(widget.cantidadComentarios == null) setState(() {
+      widget.cantidadComentarios = 0;
+    });
   }
 
   @override
@@ -136,8 +173,39 @@ class _AboutBlogScreenState extends State<AboutBlogScreen> {
         blogImage,
         (widget._blogVideo != null)? blogVideo : SizedBox(),
         SizedBox(height: 20.0),
-        content
+        content,
+        SizedBox(height: 20.0),
+        commentSection()
       ],
+    );
+  }
+
+  Widget commentSection() {
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      width: double.infinity,
+      height: 100.0,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey,
+            width: 2.5,
+            style: BorderStyle.solid
+          )
+        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('Comentarios (${widget.cantidadComentarios})'),
+          SizedBox(height: 5.0),
+          Flexible(
+            child : RaisedButton(
+              onPressed: () => navigateToComments(context),
+              child: Center( child: Text('Ver todos los comentarios')),
+            )
+          )
+        ],
+      ),
+    
     );
   }
 
@@ -153,4 +221,20 @@ class _AboutBlogScreenState extends State<AboutBlogScreen> {
       ),
     );
   }
+
+  void navigateToComments(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CommentScreen(widget.details, widget._blogTitle, widget.cantidadComentarios))
+    );
+  }
+
+  void _onCommentAdded(Event event) {
+    setState(() {
+      comments.add(new Comment.fromSnapShot(event.snapshot));
+    });
+  }
+
+
+
 }

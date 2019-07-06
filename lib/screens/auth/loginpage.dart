@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                   password: _passwordController.text
                 ).then((FirebaseUser user){
                   //Ir a pagina
-                  UserDetails details = new UserDetails(null, null, user.email);
+                  UserDetails details = new UserDetails(user.email, null, user.email);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => HomePage(details))

@@ -53,7 +53,10 @@ class _IglesiasScreenState extends State<IglesiasScreen> {
         backgroundColor: Colors.grey,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _createNewIglesia(context),
+        // onPressed: () => _createNewIglesia(context),
+        onPressed: () {
+          print(widget.details.userName);
+        },
         backgroundColor: Colors.grey,
         child: Icon(Icons.add),
       ),
@@ -120,18 +123,18 @@ class _IglesiasScreenState extends State<IglesiasScreen> {
                             children: <Widget>[ 
                               CardItem('${iglesias[position].urlImage}', '${iglesias[position].titleIglesia}', '${iglesias[position].zona}', AboutIglesia('${iglesias[position].titleIglesia}', '${iglesias[position].urlImage}', '${iglesias[position].description}', '${iglesias[position].horarios}')),
                               Positioned(
-                                top: 30.0,
-                                right: 30.0,
-                                child: (widget.details.userName == 'David Rios') ? 
-                                InkWell(
-                                  child: Icon(
-                                            Icons.delete,
-                                            size: 40.0,
-                                            color: Colors.black,
-                                  ),
-                                  onTap: () =>  _deleteIglesia(context, iglesias[position], position),
-                                 ) : SizedBox()
-                              ) ,
+                                left: 15.0,
+                                top: 10.0,                 
+                                child: widget.details.userName == 'David Rios' ?
+                                  InkWell(
+                                    child: Icon(
+                                              Icons.delete,
+                                              size: 40.0,
+                                              color: Colors.black,
+                                    ),
+                                    onTap: () =>  _deleteIglesia(context, iglesias[position], position),
+                                   ) : SizedBox(),
+                              )
                             ],
                           ),
                           Divider(height: 10.0)

@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Expanded(child: SizedBox()),
-                    this.details.userName == null ? Text('${this.details.userEmail}') : Text('${this.details.userName}'),
+                    Text('${this.details.userName}'),
                     SizedBox(height: 10.0),
                     CircleAvatar(
                       backgroundImage: this.details.photoUser == null ? AssetImage('assets/images/smile.png') : NetworkImage('${this.details.photoUser}'),

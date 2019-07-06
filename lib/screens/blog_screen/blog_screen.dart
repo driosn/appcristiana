@@ -35,6 +35,9 @@ class _BlogScreenState extends State<BlogScreen> {
     // TODO: implement initState
     super.initState();
     blogs = new List();
+    setState(() {
+      
+    });
     _onBlogAddedSubscription = blogReference.onChildAdded.listen(_onBlogAdded);
   }
  
@@ -118,20 +121,20 @@ class _BlogScreenState extends State<BlogScreen> {
                         children: <Widget>[
                           Stack(
                             children: <Widget>[ 
-                              CardItem('${blogs[position].urlImage}', '${blogs[position].titleBlog}', '${blogs[position].autor}', AboutBlogScreen('${blogs[position].titleBlog}', '${blogs[position].urlImage}', '${blogs[position].urlVideo}', '${blogs[position].contentBlog}')),
+                              CardItem('${blogs[position].urlImage}', '${blogs[position].titleBlog}', '${blogs[position].autor}', AboutBlogScreen('${blogs[position].titleBlog}', '${blogs[position].urlImage}', '${blogs[position].urlVideo}', '${blogs[position].contentBlog}', widget.details)),
                               Positioned(
-                                top: 30.0,
-                                right: 30.0,
-                                child: (widget.details.userName == 'David Rios') ? 
-                                InkWell(
-                                  child: Icon(
-                                            Icons.delete,
-                                            size: 40.0,
-                                            color: Colors.black,
-                                  ),
-                                  onTap: () =>  _deleteBlog(context, blogs[position], position),
-                                 ) : SizedBox()
-                              ) ,
+                                left: 15.0,
+                                top: 10.0,                 
+                                child: widget.details.userName == 'David Rios' ?
+                                  InkWell(
+                                    child: Icon(
+                                              Icons.delete,
+                                              size: 40.0,
+                                              color: Colors.black,
+                                    ),
+                                    onTap: () =>  _deleteBlog(context, blogs[position], position),
+                                   ) : SizedBox(),
+                              )
                             ],
                           ),
                           Divider(height: 10.0)
