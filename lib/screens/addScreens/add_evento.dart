@@ -127,6 +127,8 @@ class _AddEventoState extends State<AddEvento> {
                       Padding(padding: EdgeInsets.only(top: 8.0)),
                       Divider(),
                       FlatButton(onPressed: () async {
+                        
+                        if(image != null){
                           StorageReference ref = FirebaseStorage.instance.ref().child(basename(image.path));
                           StorageUploadTask uploadTask = ref.putFile(image);
 
@@ -138,10 +140,11 @@ class _AddEventoState extends State<AddEvento> {
                           
                     
                           ''');
+                        }
                           //var myUrl = uploadImage();
                           eventReference.push().set({
                             'titleEvent' : _titleController.text,
-                            'urlImage' : linkImage,
+                            'urlImage' : linkImage != null ? linkImage : "https://semantic-ui.com/images/wireframe/image.png",
                             'description' : _descriptionController.text,
                             'information' : _informationController.text,
                             'date' : date

@@ -119,7 +119,24 @@ class _EventosScreenState extends State<EventosScreen> {
                     itemBuilder: (context, position) {
                       return Column(
                         children: <Widget>[
-                          CardItem('${eventos[position].urlImage}', '${eventos[position].titleEvent}', '${eventos[position].date}', AboutEventos('${eventos[position].titleEvent}', '${eventos[position].urlImage}', '${eventos[position].description}', '${eventos[position].information}')),
+                          Stack(
+                            children: <Widget>[ 
+                              CardItem('${eventos[position].urlImage}', '${eventos[position].titleEvent}', '${eventos[position].date}', AboutEventos('${eventos[position].titleEvent}', '${eventos[position].urlImage}', '${eventos[position].description}', '${eventos[position].information}')),
+                              Positioned(
+                                top: 30.0,
+                                right: 30.0,
+                                child: (widget.details.userName == 'David Rios') ? 
+                                InkWell(
+                                  child: Icon(
+                                            Icons.delete,
+                                            size: 40.0,
+                                            color: Colors.black,
+                                  ),
+                                  onTap: () =>  _deleteEvent(context, eventos[position], position),
+                                 ) : SizedBox()
+                              ) ,
+                            ],
+                          ),
                           Divider(height: 10.0)
                         ],
                       );
@@ -145,5 +162,13 @@ class _EventosScreenState extends State<EventosScreen> {
     await Navigator.push(context,
         MaterialPageRoute(builder: (context) => AddEvento(MyEvent(null, '', '', '', '', '')))
     );
+  }
+
+  void _deleteEvent(BuildContext context, MyEvent event, int position) async {
+    await eventReference.child(event.id).remove().then((_) {
+      setState(() {
+        eventos.removeAt(position);
+      });
+    });
   }
 }

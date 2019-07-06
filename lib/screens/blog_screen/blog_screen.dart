@@ -116,7 +116,24 @@ class _BlogScreenState extends State<BlogScreen> {
                     itemBuilder: (context, position) {
                       return Column(
                         children: <Widget>[
-                          CardItem('${blogs[position].urlImage}', '${blogs[position].titleBlog}', '${blogs[position].autor}', AboutBlogScreen('${blogs[position].titleBlog}', '${blogs[position].urlImage}', '${blogs[position].contentBlog}')),
+                          Stack(
+                            children: <Widget>[ 
+                              CardItem('${blogs[position].urlImage}', '${blogs[position].titleBlog}', '${blogs[position].autor}', AboutBlogScreen('${blogs[position].titleBlog}', '${blogs[position].urlImage}', '${blogs[position].urlVideo}', '${blogs[position].contentBlog}')),
+                              Positioned(
+                                top: 30.0,
+                                right: 30.0,
+                                child: (widget.details.userName == 'David Rios') ? 
+                                InkWell(
+                                  child: Icon(
+                                            Icons.delete,
+                                            size: 40.0,
+                                            color: Colors.black,
+                                  ),
+                                  onTap: () =>  _deleteBlog(context, blogs[position], position),
+                                 ) : SizedBox()
+                              ) ,
+                            ],
+                          ),
                           Divider(height: 10.0)
                         ],
                       );
@@ -142,6 +159,14 @@ class _BlogScreenState extends State<BlogScreen> {
     await Navigator.push(context,
         MaterialPageRoute(builder: (context) => AddBlog(Blog(null, '', '', '', '', '')))
     );
+  }
+
+  void _deleteBlog(BuildContext context, Blog blog, int position) async {
+    await blogReference.child(blog.id).remove().then((_) {
+      setState(() {
+        blogs.removeAt(position);
+      });
+    });
   }
 
 }

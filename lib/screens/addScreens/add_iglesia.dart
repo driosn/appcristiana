@@ -94,6 +94,8 @@ class _AddIglesiaState extends State<AddIglesia> {
                       Padding(padding: EdgeInsets.only(top: 8.0)),
                       Divider(),
                       FlatButton(onPressed: () async {
+
+                        if(image != null) {
                           StorageReference ref = FirebaseStorage.instance.ref().child(basename(image.path));
                           StorageUploadTask uploadTask = ref.putFile(image);
 
@@ -105,10 +107,11 @@ class _AddIglesiaState extends State<AddIglesia> {
                           
                     
                           ''');
+                        }
                           //var myUrl = uploadImage();
                           iglesiaReference.push().set({
                             'titleIglesia' : _titleController.text,
-                            'urlImage' : linkImage,
+                            'urlImage' : linkImage != null ? linkImage : null,
                             'description' : _descriptionController.text,
                             'horarios' : _horariosController.text,
                             'zona' : _zonaController.text

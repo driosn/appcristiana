@@ -116,7 +116,24 @@ class _IglesiasScreenState extends State<IglesiasScreen> {
                     itemBuilder: (context, position) {
                       return Column(
                         children: <Widget>[
-                          CardItem('${iglesias[position].urlImage}', '${iglesias[position].titleIglesia}', '${iglesias[position].zona}', AboutIglesia('${iglesias[position].titleIglesia}', '${iglesias[position].urlImage}', '${iglesias[position].description}', '${iglesias[position].horarios}')),
+                          Stack(
+                            children: <Widget>[ 
+                              CardItem('${iglesias[position].urlImage}', '${iglesias[position].titleIglesia}', '${iglesias[position].zona}', AboutIglesia('${iglesias[position].titleIglesia}', '${iglesias[position].urlImage}', '${iglesias[position].description}', '${iglesias[position].horarios}')),
+                              Positioned(
+                                top: 30.0,
+                                right: 30.0,
+                                child: (widget.details.userName == 'David Rios') ? 
+                                InkWell(
+                                  child: Icon(
+                                            Icons.delete,
+                                            size: 40.0,
+                                            color: Colors.black,
+                                  ),
+                                  onTap: () =>  _deleteIglesia(context, iglesias[position], position),
+                                 ) : SizedBox()
+                              ) ,
+                            ],
+                          ),
                           Divider(height: 10.0)
                         ],
                       );
@@ -142,6 +159,14 @@ class _IglesiasScreenState extends State<IglesiasScreen> {
     await Navigator.push(context,
       MaterialPageRoute(builder: (context) => AddIglesia(Iglesia(null, '', '' ,'', '', '')))
     );
+  }
+
+  void _deleteIglesia(BuildContext context, Iglesia iglesia, int position) async {
+    await iglesiaReference.child(iglesia.id).remove().then((_) {
+      setState(() {
+        iglesias.removeAt(position);
+      });
+    });
   }
 
 }
