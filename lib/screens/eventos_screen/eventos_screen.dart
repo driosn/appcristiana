@@ -55,11 +55,11 @@ class _EventosScreenState extends State<EventosScreen> {
         title: Text('Eventos'),
         backgroundColor: Colors.grey,
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: widget.details.userName == 'ubbadmin@admin.com' ? FloatingActionButton(
         onPressed: () => _createNewEvent(context),
         backgroundColor: Colors.grey,
         child: Icon(Icons.add),
-      ),
+      ) : null,
       drawer: Drawer(
           child: ListView(
           // Important: Remove any padding from the ListView.
@@ -125,7 +125,7 @@ class _EventosScreenState extends State<EventosScreen> {
                               Positioned(
                                 left: 15.0,
                                 top: 10.0,                 
-                                child: widget.details.userName == 'David Rios' ?
+                                child: widget.details.userName == 'ubbadmin@admin.com' ?
                                   InkWell(
                                     child: Icon(
                                               Icons.delete,

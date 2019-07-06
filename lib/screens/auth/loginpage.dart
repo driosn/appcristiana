@@ -28,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Iniciar Sesion'),
         backgroundColor: Colors.grey,
@@ -43,9 +44,11 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Email',
                 icon: Icon(Icons.email)
               ),
+              keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 15.0),
             TextField(
+              obscureText: true,
               controller: _passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',

@@ -55,7 +55,7 @@ class _BlogScreenState extends State<BlogScreen> {
         title: Text('Blogs'),
         backgroundColor: Colors.grey,
       ),
-      floatingActionButton: widget.details.userName == 'David Rios' ? FloatingActionButton(
+      floatingActionButton: widget.details.userName == 'ubbadmin@admin.com' ? FloatingActionButton(
         onPressed: () => _createNewBlog(context),
         backgroundColor: Colors.grey,
         child: Icon(Icons.add),
@@ -125,7 +125,7 @@ class _BlogScreenState extends State<BlogScreen> {
                               Positioned(
                                 left: 15.0,
                                 top: 10.0,                 
-                                child: widget.details.userName == 'David Rios' ?
+                                child: widget.details.userName == 'ubbadmin@admin.com' ?
                                   InkWell(
                                     child: Icon(
                                               Icons.delete,

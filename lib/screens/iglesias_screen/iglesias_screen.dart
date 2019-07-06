@@ -52,14 +52,11 @@ class _IglesiasScreenState extends State<IglesiasScreen> {
         title: Text('Iglesias'),
         backgroundColor: Colors.grey,
       ),
-      floatingActionButton: FloatingActionButton(
-        // onPressed: () => _createNewIglesia(context),
-        onPressed: () {
-          print(widget.details.userName);
-        },
+      floatingActionButton: widget.details.userName == 'ubbadmin@admin.com' ? FloatingActionButton(
+        onPressed: () => _createNewIglesia(context),
         backgroundColor: Colors.grey,
         child: Icon(Icons.add),
-      ),
+      ) : null,
       drawer: Drawer(
           child: ListView(
           // Important: Remove any padding from the ListView.
@@ -125,7 +122,7 @@ class _IglesiasScreenState extends State<IglesiasScreen> {
                               Positioned(
                                 left: 15.0,
                                 top: 10.0,                 
-                                child: widget.details.userName == 'David Rios' ?
+                                child: widget.details.userName == 'ubbadmin@admin.com' ?
                                   InkWell(
                                     child: Icon(
                                               Icons.delete,
