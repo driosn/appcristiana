@@ -33,58 +33,60 @@ class _LoginPageState extends State<LoginPage> {
         title: Text('Iniciar Sesion'),
         backgroundColor: Colors.grey,
       ),
-      body: Container(
-        padding: EdgeInsets.all(30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
-                icon: Icon(Icons.email)
+      body: SingleChildScrollView(
+          child: Container(
+          padding: EdgeInsets.all(30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  icon: Icon(Icons.email)
+                ),
+                keyboardType: TextInputType.emailAddress,
               ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            SizedBox(height: 15.0),
-            TextField(
-              obscureText: true,
-              controller: _passwordController,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                icon: Icon(Icons.vpn_key)
+              SizedBox(height: 15.0),
+              TextField(
+                obscureText: true,
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  icon: Icon(Icons.vpn_key)
+                ),
               ),
-            ),
-            SizedBox(height: 15.0),
-            FlatButton(
-              child: Text('Login'),
-              color: Colors.orangeAccent,
-              textColor: Colors.white,
-              onPressed: () {
-                FirebaseAuth.instance.signInWithEmailAndPassword(
-                  email: _emailController.text,
-                  password: _passwordController.text
-                ).then((FirebaseUser user){
-                  //Ir a pagina
-                  UserDetails details = new UserDetails(user.email, null, user.email);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage(details))
-                  ); 
-                }).catchError((e) {
-                  print(e);
-                });
-              },
-            ),
-            FlatButton(
-              child: Text('Registrar'),
-              color: Colors.green,
-              textColor: Colors.white,
-              onPressed: () => _pushPage(context, RegisterPage()),
-            ),
-            VerticalDivider(),
-            GoogleSignInSection()
-          ],
+              SizedBox(height: 15.0),
+              FlatButton(
+                child: Text('Login'),
+                color: Colors.orangeAccent,
+                textColor: Colors.white,
+                onPressed: () {
+                  FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: _emailController.text,
+                    password: _passwordController.text
+                  ).then((FirebaseUser user){
+                    //Ir a pagina
+                    UserDetails details = new UserDetails(user.email, null, user.email);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage(details))
+                    ); 
+                  }).catchError((e) {
+                    print(e);
+                  });
+                },
+              ),
+              FlatButton(
+                child: Text('Registrar'),
+                color: Colors.green,
+                textColor: Colors.white,
+                onPressed: () => _pushPage(context, RegisterPage()),
+              ),
+              VerticalDivider(),
+              GoogleSignInSection()
+            ],
+          ),
         ),
       ),
     );
