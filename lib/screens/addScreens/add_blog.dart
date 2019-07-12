@@ -26,6 +26,8 @@ final blogReference = FirebaseDatabase.instance.reference().child('blog');
 
 class _AddBlogState extends State<AddBlog> {
 
+  bool _isLoading = false;
+
   File image;
   String imageName;
   String linkImage;
@@ -56,10 +58,12 @@ class _AddBlogState extends State<AddBlog> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Añadir una Blog'),
+        title: Text('Añadir un Blog'),
         backgroundColor: Colors.grey,
       ),
-      body: ListView(
+      body: Stack(
+        children: <Widget>[
+          ListView(
               children:<Widget>[
                  Container(
           height: 570.0,
@@ -123,7 +127,9 @@ class _AddBlogState extends State<AddBlog> {
                       Padding(padding: EdgeInsets.only(top: 8.0)),
                       Divider(),
                       FlatButton(onPressed: () async {
-                        
+                      
+                        _isLoading = true;
+                        setState(() {});
                         // To upload images
                         if(image != null) {  
                           StorageReference ref = FirebaseStorage.instance.ref().child(basename(image.path));
@@ -159,6 +165,7 @@ class _AddBlogState extends State<AddBlog> {
                             'content' : _contentController.text,
                             'autor' : _autorController.text,
                           }).then((_){
+                            _isLoading = false;
                             Navigator.pop(context);
                           });
                       },
@@ -173,7 +180,10 @@ class _AddBlogState extends State<AddBlog> {
                 ),
               ),
             ]
-      ),
+        ),
+        loadingProgress()
+      ],
+      )
     );
   }
 
@@ -220,6 +230,16 @@ class _AddBlogState extends State<AddBlog> {
         width: 100.0,
         height: 100.0,
       );
+  }
+
+  Widget loadingProgress() {
+
+    if ( _isLoading ) {
+      return CircularProgressIndicator();
+    } else {
+      return Container();
+    }
+    
   }
 
 }

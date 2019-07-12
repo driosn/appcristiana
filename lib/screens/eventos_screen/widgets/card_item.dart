@@ -15,6 +15,7 @@ class CardItem extends StatelessWidget {
     final _borderRadiusItem = 12.0;
 
     final cardContainer = Container(
+      width: double.infinity,
       margin: EdgeInsets.only(bottom: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(_borderRadiusItem),
@@ -52,7 +53,7 @@ class CardItem extends StatelessWidget {
                  ],
                ),
             ),
-            SizedBox(width: 5.0),
+            SizedBox(width: 40.0),
             Container(
               height: 140.0,
               width: 150.0,

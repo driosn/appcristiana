@@ -29,7 +29,7 @@ class _BlogScreenState extends State<BlogScreen> {
   
   List<Blog> blogs;
   StreamSubscription<Event> _onBlogAddedSubscription;
- 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -172,4 +172,5 @@ class _BlogScreenState extends State<BlogScreen> {
     });
   }
 
+  
 }
